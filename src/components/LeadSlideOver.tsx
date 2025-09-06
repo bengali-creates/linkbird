@@ -68,7 +68,7 @@ export default function LeadSheet() {
                 aria-label="Close"
                 className="rounded p-2 bg-slate-100 hover:bg-slate-200"
               >
-                <X size={18} />
+                
               </button>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function LeadSheet() {
                     <div className={`w-3 h-3 rounded-full ${it.status === "done" ? "bg-emerald-500" : "bg-slate-300"}`} />
                     {i < (selectedLead.interactions?.length ?? 0) - 1 && <div className="w-px bg-slate-200 flex-1 my-1" />}
                   </div>
-
+                {/* interaction roadmap  */}
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div className="text-sm font-medium">{it.title}</div>

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import {shallow} from "zustand/shallow";
 import useLeadStore, { Lead } from "@/store/useLeadStore";
 import LeadSheet from "@/components/LeadSlideOver";
-
+import useSidebarStore from "@/store/useSidebar";
 const makeLeads = (n = 24): Lead[] =>
   Array.from({ length: n }).map((_, i) => ({
     id: String(1000 + i),
@@ -27,7 +27,8 @@ export default function LeadsPage() {
   const filters = useLeadStore((s) => s.filters);
   const setFilterQuery = useLeadStore((s) => s.setFilterQuery);
   const setFilterStatus = useLeadStore((s) => s.setFilterStatus);
-
+  const toggleSidebar = useSidebarStore((s) => s.toggle);
+  const collapsed = useSidebarStore((s) => s.collapsed);
   useEffect(() => {
     setLeads(makeLeads(24)); // replace with API
   }, [setLeads]);
@@ -41,7 +42,7 @@ export default function LeadsPage() {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto p-6">
+      <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"}  p-6`}>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-semibold">Leads</h1>
 

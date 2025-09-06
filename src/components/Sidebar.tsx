@@ -15,6 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import useSidebarStore from "@/store/useSidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -64,7 +65,9 @@ export default function Sidebar({
   user?: { name?: string; image?: string };
 }) {
   const pathname = usePathname() || "/";
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+const collapsed = useSidebarStore((s) => s.collapsed);
+const toggleSidebar = useSidebarStore((s) => s.toggle);
+
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const itemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -102,7 +105,7 @@ export default function Sidebar({
       });
     } else if (e.key === "Escape") {
       // collapse sidebar on Escape (optional)
-      setCollapsed(true);
+      toggleSidebar;
     } else if (e.key === "Enter" && focusedIndex != null) {
       // activate the focused link
       const el = itemRefs.current[focusedIndex];
@@ -145,7 +148,7 @@ export default function Sidebar({
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setCollapsed((c) => !c)}
+            onClick={toggleSidebar}
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             className="rounded-full p-1"
           >
