@@ -134,11 +134,11 @@ const toggleSidebar = useSidebarStore((s) => s.toggle);
                 ${collapsed ? "w-8 h-8 text-sm" : "w-10 h-10 text-base"}
                 bg-gradient-to-br from-sky-500 to-cyan-500`}
             >
-              CW
+              LB
             </div>
             {!collapsed && (
               <div className="flex flex-col leading-tight">
-                <div className="text-lg font-semibold text-slate-900">ConnectedWeb</div>
+                <div className="text-lg font-semibold text-slate-900">Link<strong className="text-blue-700">B</strong>irdUi</div>
                 <div className="text-xs text-slate-500">Your link hub</div>
               </div>
             )}
