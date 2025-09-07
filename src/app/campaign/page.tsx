@@ -1,26 +1,19 @@
-// app/campaigns/page.tsx
+
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { use, useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CampaignsTable from "@/components/CampaignsTable";
 import useCampaignStore, { Campaign } from "@/store/useCampaignStore";
 import { useRouter } from "next/navigation";
 import useSidebarStore from "@/store/useSidebar";
-// mock generator - replace with real API
-const makeCampaigns = (n = 60): Campaign[] =>
-  Array.from({ length: n }).map((_, i) => ({
-    id: String(1000 + i),
-    name: ["Just Herbs", "Juicy chemistry", "Hyugalife 2", "Honeyveda", "HempStreet"][i % 5] + ` ${i}`,
-    status: i % 7 === 0 ? "Inactive" : "Active",
-    totalLeads: Math.floor(Math.random() * 60),
-    createdAt: new Date(Date.now() - i * 1000 * 60 * 60 * 24).toISOString(),
-    lastActivity: `${(i % 60) + 1}m ago`,
-  }));
+import { makeCampaigns } from "@/util/makeCampaign";
+
+
 
  const CampaignsPage:React.FC = () =>  {
-  // selectors: read only what you need (keeps components from re-rendering too often)
+ 
   const campaigns = useCampaignStore((s) => s.campaigns);
   const loading = useCampaignStore((s) => s.loading);
   const query = useCampaignStore((s) => s.query);
@@ -28,6 +21,8 @@ const makeCampaigns = (n = 60): Campaign[] =>
   const page = useCampaignStore((s) => s.page);
   const pageSize = useCampaignStore((s) => s.pageSize);
   const collapsed = useSidebarStore((s) => s.collapsed);
+const selectedCampaignId = useCampaignStore((s) => s.selectedCampaignId);
+
   // actions
   const setCampaigns = useCampaignStore((s) => s.setCampaigns);
   const appendCampaigns = useCampaignStore((s) => s.appendCampaigns);
@@ -38,19 +33,25 @@ const makeCampaigns = (n = 60): Campaign[] =>
   const openCampaign = useCampaignStore((s) => s.openCampaign);
   const setSelectedCampaignId = useCampaignStore((s) => s.setSelectedCampaignId);
   const router= useRouter();
+  // const makeCampaign=makeCampaigns();
 
-  // initial load (mock). Replace with fetch('/api/campaigns?...')
+
   useEffect(() => {
     setLoading(true);
-    const data = makeCampaigns(60);
+    // const data = makeCampaigns(60);/
     // simulate network
     setTimeout(() => {
-      setCampaigns(data);
+      setCampaigns(makeCampaigns());
       setLoading(false);
     }, 200);
   }, [setCampaigns, setLoading]);
 
-  // filtered + paginated
+  useEffect(() => {
+   
+    console.log('selectedCampaignId changed', selectedCampaignId);
+  }, [selectedCampaignId]);
+
+  
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return campaigns.filter((c) => {
@@ -62,17 +63,18 @@ const makeCampaigns = (n = 60): Campaign[] =>
 
   const visible = useMemo(() => filtered.slice(0, page * pageSize), [filtered, page, pageSize]);
 
-  // when a row is clicked: open new window and set selected id in store
+
   const handleRowClick = (id: string) => {
-    // open in new tab/window
+   
     router.push(`/campaign/${id}`);
-    // set selected id in this tab's store (useful if you also want a sheet)
+    
     setSelectedCampaignId(id);
     openCampaign(id);
+console.log('selectedCampaignId', selectedCampaignId)
   };
 
   return (
-    <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"}  p-6`}>
+    <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"} md:p-6 p-3`}>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Campaigns</h1>

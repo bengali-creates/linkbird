@@ -7,14 +7,23 @@ export type Campaign = {
   name: string;
   status: "Active" | "Inactive" | "Draft";
   totalLeads: number;
-  createdAt: string;
-  lastActivity?: string;
+  requestSent: number;
+  requestAccepted: number;
+  requestReplied: number;
+  startDate?: string;
+  conversionRate?: number;
+  progress: {
+    contactedPercent: number;
+    acceptancePercent: number;
+    replyPercent: number;
+  };
   description?: string;
 };
 
 type CampaignStore = {
   campaigns: Campaign[];            // full loaded list (or current page)
   selectedCampaignId: string | null;
+  selectedCampaign: Campaign | null;
   query: string;
   statusFilter: "" | Campaign["status"];
   page: number;
@@ -25,6 +34,7 @@ type CampaignStore = {
   setCampaigns: (c: Campaign[]) => void;
   appendCampaigns: (c: Campaign[]) => void;
   setSelectedCampaignId: (id: string | null) => void;
+  setSelectedCampaign: (c: Campaign | null) => void;
   openCampaign: (id: string) => void;
   closeCampaign: () => void;
 
@@ -42,6 +52,7 @@ export const useCampaignStore = create<CampaignStore>()(
   devtools((set, get) => ({
     campaigns: [],
     selectedCampaignId: null,
+    selectedCampaign: null,
     query: "",
     statusFilter: "",
     page: 1,

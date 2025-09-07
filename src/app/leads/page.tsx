@@ -1,4 +1,4 @@
-// app/leads/page.tsx
+
 "use client";
 
 import React, { useEffect } from "react";
@@ -29,8 +29,10 @@ export default function LeadsPage() {
   const setFilterStatus = useLeadStore((s) => s.setFilterStatus);
   const toggleSidebar = useSidebarStore((s) => s.toggle);
   const collapsed = useSidebarStore((s) => s.collapsed);
+  
+  // if given backend replace it with api
   useEffect(() => {
-    setLeads(makeLeads(24)); // replace with API
+    setLeads(makeLeads(24)); 
   }, [setLeads]);
 
   const filtered = leads.filter((l) => {
@@ -42,7 +44,7 @@ export default function LeadsPage() {
 
   return (
     <>
-      <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"}  p-6`}>
+      <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"} md:p-6 p-3`}>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-semibold">Leads</h1>
 

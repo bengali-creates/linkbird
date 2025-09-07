@@ -1,4 +1,4 @@
-// components/CampaignsTable.tsx
+
 "use client";
 
 import React from "react";
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"; // your shadcn table primitives
+} from "@/components/ui/table"; 
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Users } from "lucide-react";
@@ -67,7 +67,7 @@ export default function CampaignsTable({
                 </Badge>
               </TableCell>
               <TableCell className="flex justify-center items-center gap-2"><Users size={20}/>{c.totalLeads}</TableCell>
-              <TableCell className="text-sm text-slate-500">{c.lastActivity ?? "—"}</TableCell>
+              <TableCell className="text-sm text-slate-500"></TableCell>
             </TableRow>
           ))}
         </TableBody>

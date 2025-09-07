@@ -27,7 +27,7 @@ type Campaign = {
 export default function CampaignOverview({ campaign }: { campaign: Campaign }) {
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card><CardContent className="flex items-center justify-between">
           <div>
             <div className="text-xs text-slate-400">Total Leads</div>

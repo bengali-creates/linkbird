@@ -1,4 +1,4 @@
-// app/campaigns/[id]/page.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -8,94 +8,65 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import useSidebarStore from "@/store/useSidebar";
+import useCampaignStore from "@/store/useCampaignStore";
+import { Campaign } from "@/store/useCampaignStore";
 
-// Dynamically import tab components (only when needed).
-// Overview is implemented in a separate file (see file #2 below).
 const Overview = dynamic(() => import("@/components/campaigns/CampaignOverview"), {
   loading: () => <div className="p-4">Loading overview…</div>,
   ssr: false,
 });
 
-// Example placeholders you should create later:
-// const Leads = dynamic(() => import('@/components/campaigns/CampaignLeads'), { ssr:false, loading: () => <div>Loading leads…</div> });
-// const Sequence = dynamic(() => import('@/components/campaigns/CampaignSequence'), { ssr:false, loading: () => <div>Loading sequence…</div> });
 
-type Campaign = {
-  id: string;
-  name: string;
-  status: "Active" | "Inactive" | "Draft";
-  totalLeads: number;
-  requestSent: number;
-  requestAccepted: number;
-  requestReplied: number;
-  startDate?: string;
-  conversionRate?: number;
-  progress: {
-    contactedPercent: number;
-    acceptancePercent: number;
-    replyPercent: number;
-  };
-  description?: string;
-};
+const Leads = dynamic(() => import('@/components/campaigns/CampaignLeads'), { ssr:false, loading: () => <div>Loading leads…</div> });
+const Sequence = dynamic(() => import('@/components/campaigns/CampaignSequence'), { ssr:false, loading: () => <div>Loading sequence…</div> });
+const CampaignSettings = dynamic(() => import("@/components/campaigns/CampaignSettings"), { ssr: false });
 
-const mockCampaign = (id?: string): Campaign => ({
-  id: id ?? "1",
-  name: "Just Herbs",
-  status: "Active",
-  totalLeads: 20,
-  requestSent: 0,
-  requestAccepted: 0,
-  requestReplied: 0,
-  startDate: "2025-02-09",
-  conversionRate: 0,
-  progress: { contactedPercent: 0, acceptancePercent: 0, replyPercent: 0 },
-  description: "This campaign targets herb enthusiasts across channels.",
-});
+
 
 export default function CampaignPage() {
   const params = useParams();
   const id = (params as any)?.id as string | undefined;
+  const campaigns = useCampaignStore((s) => s.campaigns);
+  const selectedCampaignId = useCampaignStore((s) => s.selectedCampaignId);
+  const [campaign, setCampaign] = useState<Campaign | null>(campaigns.find((c) => c.id === id) || null);
 
-  const [campaign, setCampaign] = useState<Campaign | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+
+
   const [activeTab, setActiveTab] = useState<"overview" | "leads" | "sequence" | "settings">("overview");
-
+      const collapsed = useSidebarStore((s) => s.collapsed);
   useEffect(() => {
-    let mounted = true;
-    async function fetchCampaign() {
-      setLoading(true);
-      try {
-        if (!id) throw new Error("No id");
-        const res = await fetch(`/api/campaigns/${id}`);
-        if (!res.ok) throw new Error("API fail");
-        const data = await res.json();
-        if (mounted) setCampaign(data);
-      } catch (err) {
-        // fallback to mock so layout still renders
-        if (mounted) setCampaign(mockCampaign(id));
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-    fetchCampaign();
-    return () => {
-      mounted = false;
-    };
+    
+    console.log('first', selectedCampaignId)
+    
+      
+      
+         
+    // if (id) {
+    //   const found = campaigns.find((c) => c.id === id) || null;
+    //   setCampaign(found);
+      
+    // }
+    
+    setTimeout(() => {
+      console.log('campaign', campaign)
+    }, 1000);
   }, [id]);
 
-  if (loading || !campaign) {
+ 
+  
+  
+
+  if (!campaign) {
     return (
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 w-1/3 bg-slate-200 rounded" />
-          <div className="h-4 w-1/4 bg-slate-200 rounded" />
-        </div>
+      <div className={`${collapsed ? "max-w-7xl mx-auto" : "max-w-[75%] relative left-[20%]"}  md:p-6 p-3`}>
+        <div className="p-4 text-center text-slate-500">Loading campaign…</div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"}  md:p-6 p-3`}>
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
@@ -138,11 +109,8 @@ export default function CampaignPage() {
             <div className="text-slate-500">Sequence editor will render here. (Create and import it dynamically.)</div>
           </div>
         )}
-        {activeTab === "settings" && (
-          <div className="p-4 bg-white rounded-lg shadow">
-            <div className="text-slate-500">Settings UI — add forms or controls here.</div>
-          </div>
-        )}
+        {activeTab === "settings" && <CampaignSettings campaign={campaign} />}
+
       </div>
     </div>
   );

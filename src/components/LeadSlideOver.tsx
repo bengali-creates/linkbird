@@ -1,13 +1,13 @@
-// components/LeadSheetNoURL.tsx
+
 "use client";
 
 import React, { useEffect } from "react";
 import {shallow} from "zustand/shallow";
 import useLeadStore from "@/store/useLeadStore";
 import type { Interaction } from "@/store/useLeadStore";
-// If you need LeadStoreState, import the correct type or define it here if not exported.
+
 type LeadStoreState = ReturnType<typeof useLeadStore.getState>;
-// shadcn imports — adjust path if your project differs
+
 import {
   Sheet,
   SheetContent,
