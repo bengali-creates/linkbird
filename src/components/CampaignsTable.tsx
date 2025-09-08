@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"; 
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users } from "lucide-react";
+import { Users,UserPlus,UserCheck,CircleX,Clock,MessageCircleMore } from "lucide-react";
 
 import type { Campaign } from "@/store/useCampaignStore";
 
@@ -66,8 +66,9 @@ export default function CampaignsTable({
                   {c.status}
                 </Badge>
               </TableCell>
-              <TableCell className="flex justify-center items-center gap-2"><Users size={20}/>{c.totalLeads}</TableCell>
-              <TableCell className="text-sm text-slate-500"></TableCell>
+              <TableCell className="   "><div className="flex  items-center gap-2"><Users size={20}/>{c.totalLeads}</div></TableCell>
+              <TableCell className=" text-sm text-slate-500"><div className="flex  items-center  gap-2"><UserPlus color="lightgreen" size={20}/>{c.requestSent}<Clock color="yellow" size={20}/>{c.requestAccepted}<CircleX color="red" size={20}/>{c.totalLeads}</div></TableCell>
+              <TableCell className=" text-sm text-slate-500"><div className="flex  items-center  gap-2"><UserCheck color="blue" size={20}/>0 <MessageCircleMore color="purple" size={20}/>0</div></TableCell>
             </TableRow>
           ))}
         </TableBody>

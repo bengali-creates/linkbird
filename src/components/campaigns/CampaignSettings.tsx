@@ -111,12 +111,12 @@ export default function CampaignSettings({ campaign }: { campaign: Campaign }) {
       {/* Campaign Details Card */}
       <Card>
         <CardContent>
-          <h3 className="text-lg font-semibold mb-4">Campaign Details</h3>
+          <h3 className="text-lg font-semibold mb-3">Campaign Details</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label>Campaign Name</Label>
-              <Input value={name} onChange={(e) => setName(e.target.value)} />
+              <Input className="mt-1" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
 
             <div className="flex flex-col justify-end">
@@ -169,7 +169,7 @@ export default function CampaignSettings({ campaign }: { campaign: Campaign }) {
             </div>
 
             <div className="mt-3 text-sm text-slate-500">
-              You can choose accounts to be assigned automatically. (UI for selecting accounts can be added here.)
+              You can choose accounts to be assigned automatically.
             </div>
           </AccordionContent>
         </AccordionItem>

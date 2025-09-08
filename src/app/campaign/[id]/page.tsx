@@ -97,18 +97,8 @@ export default function CampaignPage() {
       {/* Conditionally render only the selected tab's component */}
       <div>
         {activeTab === "overview" && <Overview campaign={campaign} />}
-        {activeTab === "leads" && (
-          <div className="p-4 bg-white rounded-lg shadow">
-            {/* Placeholder: create `components/campaigns/CampaignLeads.tsx` and dynamic import it above */}
-            <div className="text-slate-500">Leads component will render here. (Create and import it dynamically.)</div>
-          </div>
-        )}
-        {activeTab === "sequence" && (
-          <div className="p-4 bg-white rounded-lg shadow">
-            {/* Placeholder: create `components/campaigns/CampaignSequence.tsx` and dynamic import it above */}
-            <div className="text-slate-500">Sequence editor will render here. (Create and import it dynamically.)</div>
-          </div>
-        )}
+        {activeTab === "leads" && <Leads />}
+        {activeTab === "sequence" &&  <Sequence campaign={campaign} />}
         {activeTab === "settings" && <CampaignSettings campaign={campaign} />}
 
       </div>

@@ -20,7 +20,13 @@ const makeLeads = (n = 24): Lead[] =>
     interactions: [{ id: "t1", title: "Invitation Request", text: "Hello!", time: "10 mins ago", status: "done" }],
   }));
 
-export default function LeadsPage() {
+  type LeadsPageProps = {
+  width?: string;          
+  left?: string;           
+  centered?: boolean;      
+  extraClassName?: string; 
+};
+export default function LeadsPage({width = "75%",left = "20%",centered = false,extraClassName = "",}) {
    const leads = useLeadStore((s) => s.leads);
   const setLeads = useLeadStore((s) => s.setLeads);
   const openSlideFor = useLeadStore((s) => s.openSlideFor);
@@ -42,9 +48,21 @@ export default function LeadsPage() {
     return matchesQ && matchesStatus;
   });
 
+  // layout controller
+const baseClass = "md:p-6 p-3";
+  const containerClass = collapsed
+    ? `max-w-7xl mx-auto ${baseClass} ${extraClassName}`
+    : `relative  ${baseClass} ${extraClassName}`;
+
+  const inlineStyle = collapsed
+  ? undefined
+  : centered
+  ? { width }           
+  : { width, left };   
+
   return (
     <>
-      <div className={`${collapsed?"max-w-7xl mx-auto":"max-w-[75%] relative left-[20%]"} md:p-6 p-3`}>
+      <div className={`${containerClass} ${!collapsed && centered ? "mx-auto" : ""}`} style={inlineStyle}>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-semibold">Leads</h1>
 

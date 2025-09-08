@@ -1,8 +1,8 @@
 import React from 'react'
-
+import LeadsPage from '@/app/leads/page'
 const CampaignLeads = () => {
   return (
-    <div>Lead</div>
+    <LeadsPage width='100%' left='0%'/>
   )
 }
 

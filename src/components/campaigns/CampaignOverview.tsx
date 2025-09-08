@@ -5,24 +5,8 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Campaign } from "@/store/useCampaignStore";
 
-type Campaign = {
-  id: string;
-  name: string;
-  status: "Active" | "Inactive" | "Draft";
-  totalLeads: number;
-  requestSent: number;
-  requestAccepted: number;
-  requestReplied: number;
-  startDate?: string;
-  conversionRate?: number;
-  progress: {
-    contactedPercent: number;
-    acceptancePercent: number;
-    replyPercent: number;
-  };
-  description?: string;
-};
 
 export default function CampaignOverview({ campaign }: { campaign: Campaign }) {
   return (
