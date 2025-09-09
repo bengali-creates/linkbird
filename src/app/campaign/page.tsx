@@ -25,7 +25,7 @@ const selectedCampaignId = useCampaignStore((s) => s.selectedCampaignId);
 
   // actions
   const setCampaigns = useCampaignStore((s) => s.setCampaigns);
-  const appendCampaigns = useCampaignStore((s) => s.appendCampaigns);
+
   const setQuery = useCampaignStore((s) => s.setQuery);
   const setStatusFilter = useCampaignStore((s) => s.setStatusFilter);
   const setPage = useCampaignStore((s) => s.setPage);

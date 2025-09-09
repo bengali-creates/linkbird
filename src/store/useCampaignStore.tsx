@@ -49,7 +49,7 @@ type CampaignStore = {
 };
 
 export const useCampaignStore = create<CampaignStore>()(
-  devtools((set, get) => ({
+  devtools((set) => ({
     campaigns: [],
     selectedCampaignId: null,
     selectedCampaign: null,

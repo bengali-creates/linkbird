@@ -24,7 +24,8 @@ type NavItem = {
   id: string;
   label: string;
   href: string;
-  icon: React.ComponentType<any>;
+  // SVG icon components (lucide-react) use SVG props
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   badge?: string;
 };
 
@@ -104,8 +105,8 @@ const toggleSidebar = useSidebarStore((s) => s.toggle);
         return next;
       });
     } else if (e.key === "Escape") {
-      // collapse sidebar on Escape (optional)
-      toggleSidebar;
+      // collapse/expand sidebar on Escape
+      toggleSidebar();
     } else if (e.key === "Enter" && focusedIndex != null) {
       // activate the focused link
       const el = itemRefs.current[focusedIndex];
@@ -124,8 +125,7 @@ const toggleSidebar = useSidebarStore((s) => s.toggle);
         ref={containerRef}
         className={`hidden md:flex fixed top-0 left-0 h-screen z-50 flex-col bg-white border-r transition-all duration-200 ease-in-out
           ${collapsed ? "w-20" : "w-72"} overflow-hidden`}
-        aria-expanded={!collapsed}
-      >
+        >
         {/* header: logo + collapse toggle */}
         <div className="flex items-center justify-between gap-2 px-4 py-4">
           <Link href="/" className="flex items-center gap-3">
@@ -196,7 +196,10 @@ const toggleSidebar = useSidebarStore((s) => s.toggle);
                     <li key={item.id}>
                       <Link
                         href={item.href}
-                        ref={(el) => { itemRefs.current[idx] = el; }}
+                        ref={(el) => {
+                          // assign to array ref; do not return a value so this matches RefCallback type
+                          itemRefs.current[idx] = el;
+                        }}
                         tabIndex={-1} // container handles focus
                         className={`flex items-center gap-3 w-full px-3 py-2 rounded-md text-sm transition-colors
                           ${

@@ -98,7 +98,7 @@ export default function CampaignPage() {
       <div>
         {activeTab === "overview" && <Overview campaign={campaign} />}
         {activeTab === "leads" && <Leads />}
-        {activeTab === "sequence" &&  <Sequence campaign={campaign} />}
+        {activeTab === "sequence" &&  <Sequence />}
         {activeTab === "settings" && <CampaignSettings campaign={campaign} />}
 
       </div>
